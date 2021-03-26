@@ -30,8 +30,6 @@ public  class InputManager: MonoBehaviour
                     inputValues.IsAutomatic = true;
                 else
                     inputValues.IsAutomatic = false;
-
-
             }
             return inputValues;
         }

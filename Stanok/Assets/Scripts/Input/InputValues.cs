@@ -51,7 +51,7 @@ public class InputValues
     public int XMax
     {
         get { return _xMax; }
-        set { int xMax = value; }
+        set { _xMax = value; }
     }
 
     public override string ToString()
