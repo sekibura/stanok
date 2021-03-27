@@ -25,7 +25,8 @@ public class CameraController : MonoBehaviour
 
     public void UpdateAxisX(float angle)
     {
-        _camera.transform.eulerAngles = new Vector3(angle, _cameraRotator.transform.eulerAngles.y, _cameraRotator.transform.eulerAngles.z);
+        _cameraRotator.transform.eulerAngles = new Vector3(angle, _cameraRotator.transform.eulerAngles.y, _cameraRotator.transform.eulerAngles.z);
+
     }
     public void UpdateAxisY(float angle)
     {

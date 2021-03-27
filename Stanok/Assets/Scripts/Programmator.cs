@@ -28,33 +28,11 @@ public class Programmator : MonoBehaviour
         {
             StartCoroutine(CompileControlCodes());
         }
-        
-
-
-    }
-    private void InitValues()
-    {
-        
-        _inputValues = _inputManager.GetInputValues();
-
-        if (_inputValues != null)
-        {
-            Debug.Log("not empty " + _inputValues.ToString());
-           
-        }
-        else
-        {
-            Debug.Log("Empty");
-        }
-    }
-    private bool IsValuesCorrect()
-    {
-        return _inputValues != null;
     }
 
     IEnumerator CompileControlCodes()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("start compile");             
         _isStoped = false;
         float currentX=0;
@@ -85,6 +63,7 @@ public class Programmator : MonoBehaviour
 
                 //RiseBlade(currentZ);
                 currentZ += _stepZ;
+
                 SendCode(currentX, currentY, currentZ);
                 //move back
                 for (int x = 0; x < _inputValues.XMax; x++)
@@ -98,6 +77,7 @@ public class Programmator : MonoBehaviour
 
                 //LowerBlade(currentZ);
                 currentZ -= _stepZ;
+
                 if (y!= _inputValues.YMax-1)
                     currentY += directionY*_stepY;
                 SendCode(currentX, currentY, currentZ);
@@ -129,11 +109,18 @@ public class Programmator : MonoBehaviour
     {
         _isStoped = true;
         SendCode(0, 0, 0);
-        _tableMovementController.ClearWays(1);
     }
 
-   
-    
-    
+
+    private void InitValues()
+    {
+        _inputValues = _inputManager.GetInputValues();
+    }
+    private bool IsValuesCorrect()
+    {
+        return _inputValues != null;
+    }
+
+
 
 }
