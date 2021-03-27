@@ -7,10 +7,13 @@ public class Programmator : MonoBehaviour
 {
     [SerializeField]
     private InputManager _inputManager;
+    [SerializeField]
+    private TableMovementController _tableMovementController;
+
     private InputValues _inputValues;
-    private float _stepX = 1f;
-    private float _stepY = 1f;
-    private float _stepZ = 1f;
+    private float _stepX = 0.3f;
+    private float _stepY = 0.3f;
+    private float _stepZ = 0.2f;
 
     public void StartWorking()
     {
@@ -64,7 +67,7 @@ public class Programmator : MonoBehaviour
                 {
                     currentX += _stepX;
                     ReciveCode(currentX, currentY, currentZ);
-                    yield return new WaitForSeconds(_inputValues.TZad);
+                    yield return new WaitForSeconds(_inputValues.TZad*0.001f);
                 }
 
                 //RiseBlade(currentZ);
@@ -75,12 +78,13 @@ public class Programmator : MonoBehaviour
                 {
                     currentX -= _stepX;
                     ReciveCode(currentX,currentY,currentZ);
-                    yield return new WaitForSeconds(_inputValues.TZad);
+                    yield return new WaitForSeconds(_inputValues.TZad * 0.001f);
                 }
 
                 //LowerBlade(currentZ);
                 currentZ -= _stepZ;
-                currentY += directionY*_stepY;
+                if (y!= _inputValues.YMax-1)
+                    currentY += directionY*_stepY;
                 ReciveCode(currentX, currentY, currentZ);
             }
 
@@ -92,14 +96,12 @@ public class Programmator : MonoBehaviour
         ReciveCode(0, 0, 0);
     }
 
-    private void Delay()
-    {
-  
-    }
+ 
 
     private void ReciveCode(float x, float y, float z)
     {
         Debug.Log(x + " " + y + " " + z);
+        _tableMovementController.ReceiveCode(x, y, z);
     }
 
     private void RiseBlade(float currentZ)
