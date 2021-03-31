@@ -19,6 +19,15 @@ public class Programmator : MonoBehaviour
     private float _stepY = 0.35f;
     private float _stepZ = 0.2f;
 
+    private int _currentXStep = 0;
+    private int _currentYStep = 0;
+    private int _currentZStep = 0;
+
+    private float _currentX = 0;
+    private float _currentY = 0;
+    private float _currentZ = 0;
+
+
     private bool _isStoped = true;
 
     public void StartWorking()
@@ -30,67 +39,77 @@ public class Programmator : MonoBehaviour
         }
     }
 
+    public void Step()
+    {
+        if (IsValuesCorrect())
+        {
+            StartCoroutine(CompileControlCodes());
+        }
+    }
+
     IEnumerator CompileControlCodes()
     {
         yield return new WaitForSeconds(0.5f);
         Debug.Log("start compile");             
         _isStoped = false;
-        float currentX=0;
-        float currentY=0;
-        float currentZ=0;
+  
 
         int directionY = 1;
-        SendCode(0, 0, 0);
-        for (int z = 0; z < _inputValues.ZMax; z++)
+        //SendCode(0, 0, 0);
+        for (int z = _currentZStep; z < _inputValues.ZMax; z++)
         {
             if (_isStoped)
                 break;
-            SendCode(currentX, currentY, currentZ);
-            for (int y = 0; y < _inputValues.YMax; y++)
+            //SendCode(currentX, currentY, currentZ);
+            for (int y = _currentYStep; y < _inputValues.YMax; y++)
             {
                 if (_isStoped)
                     break;
                 //move forward
-                for (int x = 0; x < _inputValues.XMax; x++)
+                for (int x = _currentXStep; x < _inputValues.XMax; x++)
                 {
                     if (_isStoped)
                         break;
 
-                    currentX += _stepX;
-                    SendCode(currentX, currentY, currentZ);
+                    _currentX += _stepX;
+                    SendCode(_currentX, _currentY, _currentZ);
+                    if (_inputValues.IsAutomatic)
+                        break;
                     yield return new WaitForSeconds(_inputValues.TZad*0.01f);
                 }
 
                 //RiseBlade(currentZ);
-                currentZ += _stepZ;
+                _currentZ += _stepZ;
 
-                SendCode(currentX, currentY, currentZ);
+                SendCode(_currentX, _currentY, _currentZ);
                 //move back
                 for (int x = 0; x < _inputValues.XMax; x++)
                 {
                     if (_isStoped)
                         break;
-                    currentX -= _stepX;
-                    SendCode(currentX,currentY,currentZ);
+                    _currentX -= _stepX;
+                    SendCode(_currentX,_currentY,_currentZ);
+                    if (_inputValues.IsAutomatic)
+                        break;
                     yield return new WaitForSeconds(_inputValues.TZad * 0.01f);
                 }
 
                 //LowerBlade(currentZ);
-                currentZ -= _stepZ;
+                _currentZ -= _stepZ;
 
                 if (y!= _inputValues.YMax-1)
-                    currentY += directionY*_stepY;
-                SendCode(currentX, currentY, currentZ);
+                    _currentY += directionY*_stepY;
+                SendCode(_currentX, _currentY, _currentZ);
             }
 
-            currentZ -= _stepZ;
+            _currentZ -= _stepZ;
             directionY *= -1;
             
 
         }
         SendCode(0, 0, 0);
     }
-
+ 
  
 
     private void SendCode(float x, float y, float z)
@@ -115,12 +134,21 @@ public class Programmator : MonoBehaviour
     private void InitValues()
     {
         _inputValues = _inputManager.GetInputValues();
-    }
+
+        _currentXStep = 0;
+        _currentYStep = 0;
+        _currentZStep = 0;
+
+        _currentX = 0;
+        _currentY = 0;
+        _currentZ = 0;
+
+}
     private bool IsValuesCorrect()
     {
         return _inputValues != null;
     }
 
-
+    
 
 }
