@@ -19,9 +19,9 @@ public class TableMovementController : MonoBehaviour
         SpawnWay();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        MoveToTargetPosition();   
+        MoveToTargetPosition();
     }
 
     private void MoveToTargetPosition()

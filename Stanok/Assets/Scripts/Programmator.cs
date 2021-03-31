@@ -58,7 +58,7 @@ public class Programmator : MonoBehaviour
 
                     currentX += _stepX;
                     SendCode(currentX, currentY, currentZ);
-                    yield return new WaitForSeconds(_inputValues.TZad*0.001f);
+                    yield return new WaitForSeconds(_inputValues.TZad*0.01f);
                 }
 
                 //RiseBlade(currentZ);
@@ -72,7 +72,7 @@ public class Programmator : MonoBehaviour
                         break;
                     currentX -= _stepX;
                     SendCode(currentX,currentY,currentZ);
-                    yield return new WaitForSeconds(_inputValues.TZad * 0.001f);
+                    yield return new WaitForSeconds(_inputValues.TZad * 0.01f);
                 }
 
                 //LowerBlade(currentZ);
