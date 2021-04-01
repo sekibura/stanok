@@ -27,6 +27,8 @@ public class Programmator : MonoBehaviour
     private float _currentY = 0;
     private float _currentZ = 0;
 
+    int _currentDirectionY = 1;
+
 
     private bool _isStoped = true;
 
@@ -54,7 +56,7 @@ public class Programmator : MonoBehaviour
         _isStoped = false;
   
 
-        int directionY = 1;
+        int directionY = _currentDirectionY;
         //SendCode(0, 0, 0);
         for (int z = _currentZStep; z < _inputValues.ZMax; z++)
         {
@@ -66,45 +68,57 @@ public class Programmator : MonoBehaviour
                 if (_isStoped)
                     break;
                 //move forward
-                for (int x = _currentXStep; x < _inputValues.XMax; x++)
+                for (int x = _currentXStep; x < _inputValues.XMax*2; x++)
                 {
                     if (_isStoped)
                         break;
 
-                    _currentX += _stepX;
+                    if(x >= _inputValues.XMax)
+                        _currentX -= _stepX;
+                    else
+                        _currentX += _stepX;
+
                     SendCode(_currentX, _currentY, _currentZ);
-                    if (_inputValues.IsAutomatic)
-                        break;
-                    yield return new WaitForSeconds(_inputValues.TZad*0.01f);
+
+                    _currentXStep = x+1;
+                    _currentYStep = y;
+                    _currentZStep = z;
+
+                    if (!_inputValues.IsAutomatic)
+                        yield break;
+                    yield return new WaitForSeconds(_inputValues.TZad*0.001f);
                 }
+                _currentXStep =0;
 
-                //RiseBlade(currentZ);
-                _currentZ += _stepZ;
+                // _currentZ += _stepZ;
 
-                SendCode(_currentX, _currentY, _currentZ);
-                //move back
-                for (int x = 0; x < _inputValues.XMax; x++)
-                {
-                    if (_isStoped)
-                        break;
-                    _currentX -= _stepX;
-                    SendCode(_currentX,_currentY,_currentZ);
-                    if (_inputValues.IsAutomatic)
-                        break;
-                    yield return new WaitForSeconds(_inputValues.TZad * 0.01f);
-                }
+                //SendCode(_currentX, _currentY, _currentZ);
+                ////move back
+                //for (int x = 0; x < _inputValues.XMax; x++)
+                //{
+                //    if (_isStoped)
+                //        break;
+                //    _currentX -= _stepX;
+                //    SendCode(_currentX,_currentY,_currentZ);
+                //    //if (_inputValues.IsAutomatic)
+                //    //    break;
+                //    yield return new WaitForSeconds(_inputValues.TZad * 0.001f);
+                //}
 
-                //LowerBlade(currentZ);
-                _currentZ -= _stepZ;
+
+                //_currentZ -= _stepZ;
 
                 if (y!= _inputValues.YMax-1)
                     _currentY += directionY*_stepY;
                 SendCode(_currentX, _currentY, _currentZ);
+                _currentYStep = y + 1;
             }
+            _currentYStep =0;
 
             _currentZ -= _stepZ;
             directionY *= -1;
-            
+            _currentDirectionY *= -1;
+            _currentZStep = z+1;
 
         }
         SendCode(0, 0, 0);
@@ -116,6 +130,7 @@ public class Programmator : MonoBehaviour
     {
         _outputManager.UpdateValues(FloatToSteps(x, y, z));
         _tableMovementController.ReceiveCode(x, y, z);
+        Debug.Log(x + " " + y + " " + z);
     }
 
    
@@ -134,7 +149,7 @@ public class Programmator : MonoBehaviour
     private void InitValues()
     {
         _inputValues = _inputManager.GetInputValues();
-
+         
         _currentXStep = 0;
         _currentYStep = 0;
         _currentZStep = 0;
@@ -142,6 +157,8 @@ public class Programmator : MonoBehaviour
         _currentX = 0;
         _currentY = 0;
         _currentZ = 0;
+
+        _currentDirectionY = 1;
 
 }
     private bool IsValuesCorrect()

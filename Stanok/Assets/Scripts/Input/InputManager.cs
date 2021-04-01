@@ -12,6 +12,9 @@ public  class InputManager: MonoBehaviour
     private TMP_InputField _xMaxField, _yMaxField, _zMaxField, _tZadField;
     [SerializeField]
     private ToggleGroup _toggleGroup;
+
+    [SerializeField]
+    private Button _stepButton;
     
 
      public InputValues GetInputValues()
@@ -45,5 +48,17 @@ public  class InputManager: MonoBehaviour
     private bool IsFieldsEmpty()
     {
         return String.IsNullOrEmpty(_xMaxField.text) || String.IsNullOrEmpty(_yMaxField.text) || String.IsNullOrEmpty(_zMaxField.text) || String.IsNullOrEmpty(_tZadField.text);
+    }
+
+    public void OnStartButton()
+    {
+        if (_toggleGroup.AnyTogglesOn())
+        {
+            Debug.Log(GetActiveToggle().name);
+            if (GetActiveToggle().name.Equals("AutomaticToggle"))
+                _stepButton.interactable = false;
+            else
+                _stepButton.interactable = true;
+        }
     }
 }
