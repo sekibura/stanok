@@ -67,7 +67,7 @@ public class Programmator : MonoBehaviour
             {
                 if (_isStoped)
                     break;
-                //move forward
+
                 for (int x = _currentXStep; x < _inputValues.XMax*2; x++)
                 {
                     if (_isStoped)
@@ -86,7 +86,7 @@ public class Programmator : MonoBehaviour
 
                     if (!_inputValues.IsAutomatic)
                         yield break;
-                    yield return new WaitForSeconds(_inputValues.TZad*0.001f);
+                    yield return new WaitForSecondsRealtime(_inputValues.TZad*0.001f);
                 }
                 _currentXStep =0;
 
@@ -143,6 +143,7 @@ public class Programmator : MonoBehaviour
     {
         _isStoped = true;
         SendCode(0, 0, 0);
+
     }
 
 
