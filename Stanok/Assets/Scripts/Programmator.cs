@@ -37,7 +37,12 @@ public class Programmator : MonoBehaviour
         InitValues();
         if (IsValuesCorrect())
         {
+            _inputManager.SetInputStartedState();
             StartCoroutine(CompileControlCodes());
+        }
+        else
+        {
+            InputErrorScreen();
         }
     }
 
@@ -46,6 +51,10 @@ public class Programmator : MonoBehaviour
         if (IsValuesCorrect())
         {
             StartCoroutine(CompileControlCodes());
+        }
+        else
+        {
+            InputErrorScreen();
         }
     }
 
@@ -141,8 +150,10 @@ public class Programmator : MonoBehaviour
 
     public void Stop()
     {
+        _inputManager.SetInputStopedState();
         _isStoped = true;
         SendCode(0, 0, 0);
+        _tableMovementController.ClearWays(0);
 
     }
 
@@ -167,6 +178,12 @@ public class Programmator : MonoBehaviour
         return _inputValues != null;
     }
 
+    private void InputErrorScreen()
+    {
+        _outputManager.InputErrorScreen();
+        Debug.Log("error screen");
+        Stop();
+    }
     
 
 }
