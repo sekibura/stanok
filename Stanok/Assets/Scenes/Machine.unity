@@ -5448,7 +5448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8097802082924901266, guid: c5d1ab4ddb989524f92e93d08179fafb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.9545993
+      value: 1.0740197
       objectReference: {fileID: 0}
     - target: {fileID: 8097802082924901266, guid: c5d1ab4ddb989524f92e93d08179fafb, type: 3}
       propertyPath: m_LocalScale.z
@@ -5460,7 +5460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8097802082924901266, guid: c5d1ab4ddb989524f92e93d08179fafb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.3
+      value: -2.26
       objectReference: {fileID: 0}
     - target: {fileID: 8097802082924901266, guid: c5d1ab4ddb989524f92e93d08179fafb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10357,7 +10357,7 @@ GameObject:
   - component: {fileID: 8169121785532139182}
   - component: {fileID: 5877496084545988544}
   m_Layer: 6
-  m_Name: Bullet (5)
+  m_Name: BladeHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
