@@ -1,14 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[Serializable]
 public class InputValues
-{
+{   [SerializeField]
     private int _xMax;
+    [SerializeField]
     private int _yMax;
+    [SerializeField]
     private int _zMax;
+    [SerializeField]
     private int _tZad;
-    private bool _isAutomatic;
+    [SerializeField]
+    private bool _isAutomatic = true;
 
     public bool IsAutomatic
     {

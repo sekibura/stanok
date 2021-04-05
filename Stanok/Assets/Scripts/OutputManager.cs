@@ -14,6 +14,8 @@ public class OutputManager : MonoBehaviour
     private TMP_Text _zField;
     [SerializeField]
     private GameObject _errorPanel;
+    [SerializeField]
+    private GameObject _fileBrowserModePanle;
 
     public void UpdateValues(Vector3 coordinates)
     {
@@ -26,4 +28,11 @@ public class OutputManager : MonoBehaviour
     {
         _errorPanel.SetActive(true);
     }
+
+    public void SetBrowserMode(bool enable)
+    {
+         _fileBrowserModePanle.SetActive(enable);
+        Debug.Log(enable + " file browser panel");
+    }
+
 }
