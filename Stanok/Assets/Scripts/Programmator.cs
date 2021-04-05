@@ -158,6 +158,15 @@ public class Programmator : MonoBehaviour
 
     }
 
+    public void Finish()
+    {
+        _inputManager.SetInputStopedState();
+        _isStoped = true;
+        StopAllCoroutines();
+        SendCode(0, 0, 0);
+        _tableMovementController.ClearWays(0);
+    }
+
 
     private void InitValues()
     {
